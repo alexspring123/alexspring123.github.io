@@ -1,0 +1,798 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="angular,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="路由对于任何前端框架或库都是必不可少的。它允许我们加载应用程序一次，并通过客户端路由向用户显示不同的内容，从而使单页面应用成为可能。  Angular的路由器使用起来很简单，但是你有没有想过在单击Angular应用程序中的链接时会发生什么？在本文中，我们将回答这个问题以及更多问题。通过了解路由器的导航周期，可以更深入的了解Angular工作原理。">
+<meta name="keywords" content="angular">
+<meta property="og:type" content="article">
+<meta property="og:title" content="angular路由的导航周期">
+<meta property="og:url" content="https://alexspring123.github.io/2019/01/21/201901/angular路由的导航周期/index.html">
+<meta property="og:site_name" content="无名之家">
+<meta property="og:description" content="路由对于任何前端框架或库都是必不可少的。它允许我们加载应用程序一次，并通过客户端路由向用户显示不同的内容，从而使单页面应用成为可能。  Angular的路由器使用起来很简单，但是你有没有想过在单击Angular应用程序中的链接时会发生什么？在本文中，我们将回答这个问题以及更多问题。通过了解路由器的导航周期，可以更深入的了解Angular工作原理。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://alexspring123.github.io/2019/01/21/201901/angular路由的导航周期/angular路由的导航周期/angular-router-cycle.png">
+<meta property="og:image" content="https://alexspring123.github.io/2019/01/21/201901/angular路由的导航周期/angular路由的导航周期/router_events_debug_info.png">
+<meta property="og:image" content="https://alexspring123.github.io/2019/01/21/201901/angular路由的导航周期/angular路由的导航周期/angular-router-cycle-recognize.png">
+<meta property="og:image" content="https://alexspring123.github.io/2019/01/21/201901/angular路由的导航周期/angular路由的导航周期/angular-router-cycle-route-guards.png">
+<meta property="og:image" content="https://alexspring123.github.io/2019/01/21/201901/angular路由的导航周期/angular路由的导航周期/angular-router-cycle-resolve.png">
+<meta property="og:image" content="https://alexspring123.github.io/2019/01/21/201901/angular路由的导航周期/angular路由的导航周期/angular-router-cycle-views.png">
+<meta property="og:image" content="https://alexspring123.github.io/2019/01/21/201901/angular路由的导航周期/angular路由的导航周期/router_ActivatedRoutstate_debug_info.png">
+<meta property="og:image" content="https://alexspring123.github.io/2019/01/21/201901/angular路由的导航周期/angular路由的导航周期/angular-router-cycle-update-url.png">
+<meta property="og:updated_time" content="2019-01-21T09:38:26.980Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="angular路由的导航周期">
+<meta name="twitter:description" content="路由对于任何前端框架或库都是必不可少的。它允许我们加载应用程序一次，并通过客户端路由向用户显示不同的内容，从而使单页面应用成为可能。  Angular的路由器使用起来很简单，但是你有没有想过在单击Angular应用程序中的链接时会发生什么？在本文中，我们将回答这个问题以及更多问题。通过了解路由器的导航周期，可以更深入的了解Angular工作原理。">
+<meta name="twitter:image" content="https://alexspring123.github.io/2019/01/21/201901/angular路由的导航周期/angular路由的导航周期/angular-router-cycle.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6363407138743649000',
+      author: '无名'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://alexspring123.github.io/2019/01/21/201901/angular路由的导航周期/">
+
+
+
+
+
+  <title> angular路由的导航周期 | 无名之家 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">无名之家</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">知行合一 <br>修生、齐家、治国、平天下</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://alexspring123.github.io/2019/01/21/201901/angular路由的导航周期/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="无名">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="无名之家">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="无名之家" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                angular路由的导航周期
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-21T14:58:00+08:00">
+                2019-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2019/01/21/201901/angular路由的导航周期/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/01/21/201901/angular路由的导航周期/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>路由对于任何前端框架或库都是必不可少的。它允许我们加载应用程序一次，并通过客户端路由向用户显示不同的内容，从而使单页面应用成为可能。 </p>
+<p>Angular的路由器使用起来很简单，但是你有没有想过在单击Angular应用程序中的链接时会发生什么？在本文中，我们将回答这个问题以及更多问题。<br><strong>通过了解路由器的导航周期，可以更深入的了解Angular工作原理。</strong></p>
+<a id="more"></a>
+<p>通过本文，您将了解路由器导航相关的如下三个问题：  </p>
+<ol>
+<li>对于特定的url，应该被导航到哪一个组件？</li>
+<li>是否能通过路由导航到某个组件上？</li>
+<li>是否需要在导航到这些组件之前获取一些数据？</li>
+</ol>
+<p>过程中，我们将详细介绍以下内容：</p>
+<ol>
+<li>路由器导航从开始到结束的整个处理过程。</li>
+<li>路由器在导航期间和之后如何构建和使用ActivatedRouteSnapshot对象树。</li>
+<li>使用<code>&lt;router-outlet&gt;</code>指令呈现内容。</li>
+</ol>
+<p><img src="./angular路由的导航周期/angular-router-cycle.png" alt="路由器的导航生命周期"></p>
+<p>下面让我们跟着生命周期执行步骤，看看我们在Angular应用程序中路由时会发生什么。</p>
+<h2 id="导航"><a href="#导航" class="headerlink" title="导航"></a>导航</h2><p>Angular创建的是一个单页面应用程序。这意味着每当URL更改时，我们实际上不会从服务器加载新页面。而是由路由器在浏览器中提供基于位置的导航，<a href="https://blog.angular-university.io/why-a-single-page-application-what-are-the-benefits-what-is-a-spa/" target="_blank" rel="noopener">这对单页应用程序至关重要</a>。它允许我们更改用户看到的内容以及URL，而无需刷新页面。  </p>
+<p>只要URL发生更改，就会发生导航（路由）。我们需要一种在应用程序中的视图之间导航的方法，但不能使用锚点href，因为会触发整页重新加载。Angular为我们提供<code>[routerLink]</code>指令来解决这个问题。单击时，它会告诉路由器更新URL并使用<code>&lt;router-outlet&gt;</code>指令呈现内容，而无需重新加载页面。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 不使用routerLink指令 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'localhost:4200/users'</span>&gt;</span>Users<span class="tag">&lt;/<span class="name">a</span>&gt;</span>  <span class="comment">&lt;!-- 不是我们想要的！ --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 使用routerLink指令 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> [<span class="attr">routerLink</span>]=<span class="string">"['/users']"</span>&gt;</span>Users<span class="tag">&lt;/<span class="name">a</span>&gt;</span>  <span class="comment">&lt;!-- 路由器将接管处理 --&gt;</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>代码来源于<a href="https://gist.github.com/nathan-lapinski/6574366a77a295900e94a3e89bdc8646#file-links_example-html" target="_blank" rel="noopener">由GitHub托管的原始links_example.html</a> </p>
+</blockquote>
+<p>对于每次导航，在路由器在屏幕上呈现新组件之前会发生一系列步骤。这称为路由器导航生命周期。</p>
+<p>导航成功后新组件被渲染到<code>&lt;router-outlet&gt;</code>指令指定的地方，并且创建ActivatedRoute数据结构树作为导航的可查询记录。<a href="https://blog.angularindepth.com/angular-routing-series-pillar-1-router-states-and-url-matching-12520e62d0fc" target="_blank" rel="noopener">如果您想了解有关激活路由和路由器状态的更多信息，我在这里已经写过了</a>。本文研究的是路由器导航的生命周期，因此我们只需知道路由器和开发人员都使用激活的路由来提取有关导航的信息，例如查询参数和组件。</p>
+<h2 id="示例应用"><a href="#示例应用" class="headerlink" title="示例应用"></a>示例应用</h2><p>我们将使用一个非常简单的应用程序作为运行示例。<br>下面是路由器配置<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ROUTES = [</span><br><span class="line">  &#123; path: <span class="string">'users'</span>,</span><br><span class="line">    component: UsersComponent,</span><br><span class="line">    canActivate: [CanActivateGuard],</span><br><span class="line">    resolve: &#123;</span><br><span class="line">      users: UserResolver</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>代码来源于<a href="https://gist.github.com/nathan-lapinski/6eb09a5800f843b2853907c6bae8174d#file-app-module-ts" target="_blank" rel="noopener">GitHub托管的原始app.module.ts</a><br>完整的示例代码查看 <a href="https://stackblitz.com/edit/angular-pillar-two-navigation-demo?embed=1&amp;file=src/app/app.component.ts" target="_blank" rel="noopener">这里</a> 或 <a href="https://stackblitz.com/edit/angular-pillar-two-navigation-demo?embed=1&amp;file=src/app/app.component.ts" target="_blank" rel="noopener">这里</a>。</p>
+</blockquote>
+<p>该应用程序由一个路由组成，该路由通过<code>/users</code>查询参数判断用户是否已登录（<code>login=1</code>），然后显示它从模拟API服务检索的用户名列表。</p>
+<p>应用程序的细节并不重要。我们只需要一个示例来查看导航周期。</p>
+<h2 id="导航周期和路由器事件"><a href="#导航周期和路由器事件" class="headerlink" title="导航周期和路由器事件"></a>导航周期和路由器事件</h2><p>查看导航周期的一个好方法是订阅路由器服务的<code>events</code>可观察性：<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> router: Router</span>) &#123;</span><br><span class="line">  <span class="keyword">this</span>.router.events.subscribe( <span class="function">(<span class="params">event: RouterEvent</span>) =&gt;</span> <span class="built_in">console</span>.log(event))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>代码来源于<a href="https://gist.github.com/nathan-lapinski/d21f92315879141df5faf8ca16fc49e2#file-router_event_sub-ts" target="_blank" rel="noopener">GitHub托管的原始原始router_event_sub.ts</a> </p>
+</blockquote>
+<p>在开发过程中，您还可以传递<code>enableTracing: true</code>路由器配置中的选项。<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RouterModule.forRoot(ROUTES, &#123;</span><br><span class="line">  enableTracing: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>代码来源于<a href="https://gist.github.com/nathan-lapinski/f8451d71f393a0b45b7723e107265008#file-app-component-ts" target="_blank" rel="noopener">GitHub托管的原始原始app.component.ts</a> </p>
+</blockquote>
+<p>在开发人员控制台中，我们可以看到导航到<code>/users</code>路径期间发出的事件：<br><img src="./angular路由的导航周期/router_events_debug_info.png" alt="导航事件。我们也传递了登录查询参数。更多关于路线防护的部分。"><br>这些事件对于研究或调试路由器非常有用。您也可以轻松点击它们以在导航期间显示加载消息。<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ngOnInit() &#123;</span><br><span class="line">  <span class="keyword">this</span>.router.events.subscribe(<span class="function"><span class="params">evt</span> =&gt;</span> &#123; </span><br><span class="line">    <span class="keyword">if</span> (evt <span class="keyword">instanceof</span> NavigationStart) &#123;</span><br><span class="line">      <span class="keyword">this</span>.message = <span class="string">'Loading...'</span>;</span><br><span class="line">      <span class="keyword">this</span>.displayMessage = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (evt <span class="keyword">instanceof</span> NavigationEnd) <span class="keyword">this</span>.displayMessage = <span class="literal">false</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">&gt;摘自[app.component.ts](https://gist.github.com/nathan-lapinski/a833c85b7616ffa46f77631bb930d5ef#file-app-component-ts) 。在导航开始时显示加载消息，并在导航结束后清除消息。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">下面让我们浏览导航/users。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">## 导航开始</span></span><br><span class="line"><span class="string">*事件：NavigationStart*</span></span><br><span class="line"><span class="string">在我们的示例应用程序中，用户首先单击以下链接：</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>html</span><br><span class="line">&lt;a [routerLink]=<span class="string">"['/users']"</span> [queryParams]=<span class="string">"&#123;'login': '1'&#125;"</span>&gt;Authorized Navigation&lt;<span class="regexp">/a&gt;</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>代码摘自<a href="https://gist.github.com/nathan-lapinski/70811b0d5583d9c620fc6f6e8cccbdc0#file-app-component-html" target="_blank" rel="noopener">app.component.html</a> 。导航到<code>/users</code>，并传递查询参数<code>login = 1</code>（请参阅路由器防护部分）。</p>
+</blockquote>
+<p>每当路由器检测到路由器链接指令上的单击时，它就会启动导航循环和必要导航方法，例如路由器服务<code>navigate</code>和<code>navigateByUrl</code>方法。  </p>
+<p>以前，可能会有多个导航同时运行（因此需要导航ID），<a href="https://github.com/angular/angular/commit/b7baf632c0161692f15d13f718329ab54a0f938a" target="_blank" rel="noopener">但是通过此更改，一次只能有一个导航</a>。</p>
+<h2 id="网址匹配和重定向"><a href="#网址匹配和重定向" class="headerlink" title="网址匹配和重定向"></a>网址匹配和重定向</h2><p><em>事件：RoutesRecognized</em><br><img src="./angular路由的导航周期/angular-router-cycle-recognize.png" alt="重定向和匹配是循环的第一步和第二步"><br>路由器首先通过路由器配置数组（我们示例中的<code>ROUTES</code>）进行深度优先搜索，然后尝试将URL与路由器配置中的<code>/users</code>的某个<code>path</code>属性进行匹配，同时应用任何重定向。<a href="https://blog.angularindepth.com/angular-routing-series-pillar-1-router-states-and-url-matching-12520e62d0fc#3284" target="_blank" rel="noopener">如果你想详细了解这个过程，我在这里写了一下</a>。  </p>
+<p>在我们的示例中，没有重定向要担心，并且URL <code>/users</code> 将匹配以下配置<code>ROUTES</code>：  </p>
+<blockquote>
+<p><code>{path：&#39;users&#39;，component：UsersComponent，...}</code></p>
+</blockquote>
+<p>如果匹配的路径需要延迟加载的模块，则此时将加载它。</p>
+<p>路由器发出一个<code>RoutesRecognized</code>事件来表示它已找到匹配的URL，以及一个要导航到（UsersComponent）的组件。这回答了路由器的第一个问题，“我应该导航到什么？”。但事情并没有结束，路由器必须确保允许导航到这个新组件。这就是下面的路线防护。</p>
+<h2 id="路线卫兵"><a href="#路线卫兵" class="headerlink" title="路线卫兵"></a>路线卫兵</h2><p><em>事件：GuardsCheckStart，GuardsCheckEnd</em><br><img src="./angular路由的导航周期/angular-router-cycle-route-guards.png" alt=""><br>路径保护是布尔函数，路由器使用它来确定它是否可以执行导航。<strong>作为开发人员，我们使用警卫来控制是否可以进行导航</strong>。在我们的示例应用程序中，我们使用<a href="https://angular.io/api/router/CanActivate" target="_blank" rel="noopener">canActivate</a>防护来通过在路由配置中指定用户来检查用户是否已登录。</p>
+<blockquote>
+<p><code>{path：&#39;users&#39;，...，canActivate：[CanActivateGuard]}</code></p>
+</blockquote>
+<p>保护功能如下所示。<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): <span class="built_in">boolean</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.auth.isAuthorized(route.queryParams.login);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>代码摘自<a href="https://gist.github.com/nathan-lapinski/f0a027034250de54ae80cc443ae3cf8a#file-can-activate-guard-ts" target="_blank" rel="noopener">can-activate.guard.ts</a> 。当查询参数<code>login = 1</code>时，isAuthorized将返回true。</p>
+</blockquote>
+<p>此保护将<code>login</code>查询参数传递给<code>auth</code>服务（<code>auth.service.ts</code>在示例应用程序中）。</p>
+<p>如果调用<code>isAuthorized(route.queryParams.login)</code>返回<code>true</code>，则通过防护。否则，防护失败，路由器发出<code>NavigationCancel</code>事件，并中止整个导航。</p>
+<p>其他防护包括<a href="https://angular.io/api/router/CanLoad" target="_blank" rel="noopener">canLoad</a>（模块是否应该延迟加载），<a href="https://angular.io/api/router/CanActivateChild" target="_blank" rel="noopener">canActivateChild</a>和<a href="https://angular.io/api/router/CanDeactivate" target="_blank" rel="noopener">canDeactivate</a>（这对于防止用户导航离开页面非常有用，例如，在填写表单时）。</p>
+<p>警卫与服务类似，他们注册为提供者并可注射。每当URL发生变化时，路由器都会运行防护。</p>
+<p><strong>canActivate防护在为路由获取任何数据之前运行，因为没有理由获取不应激活的路由的数据</strong>。一旦警卫通过，路由器已经回答了第二个问题，“我应该执行此导航吗？”。路由器现在可以使用路由解析器预取任何数据。</p>
+<h2 id="路线解析器"><a href="#路线解析器" class="headerlink" title="路线解析器"></a>路线解析器</h2><p><em>事件：ResolveStart，ResolveEnd</em><br><img src="./angular路由的导航周期/angular-router-cycle-resolve.png" alt=""><br>路由解析器是我们可以在路由器呈现任何内容之前用于在导航期间预取数据的函数。与防护类似，我们使用<code>resolve</code>属性在路径配置中指定解析器：</p>
+<blockquote>
+<p><code>{path：&#39;users&#39;，...，resolve：{users：UserResolver}}</code><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> UserResolver <span class="keyword">implements</span> Resolve&lt;Observable&lt;<span class="built_in">any</span>&gt;&gt; &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> userService: MockUserDataService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  resolve(): Observable&lt;<span class="built_in">any</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.userService.getUsers();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>代码摘自<a href="https://gist.github.com/nathan-lapinski/08727ef15efe87375a3db7d474c90b3a#file-user-resolver-ts" target="_blank" rel="noopener">user.resolver.ts</a> 。</p>
+</blockquote>
+<p>一旦路由器将URL与路径匹配，并且所有防护已经通过，它将调用类中<code>resolve</code>定义的方法<code>UserResolver</code>来获取数据。路由器将结果存储在密钥下的<code>ActivatedRoute</code>服务<code>data</code>对象上<code>users</code>。订阅<code>ActivatedRoute</code>服务的<code>dataobservable</code> 可以读取此信息。</p>
+<blockquote>
+<p><code>activatedRouteService.data.subscribe（data =&gt; data.users）;</code></p>
+</blockquote>
+<p><a href="https://angular.io/api/router/ActivatedRoute" target="_blank" rel="noopener">ActivatedRoute</a>服务在UsersComponent的内部使用，用来检索来自解析器的数据。<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> UsersComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  <span class="keyword">public</span> users = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> route: ActivatedRoute</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit() &#123;</span><br><span class="line">    <span class="keyword">this</span>.route.data.subscribe(<span class="function"><span class="params">data</span> =&gt;</span> <span class="keyword">this</span>.users = data.users);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>代码摘自<a href="https://gist.github.com/nathan-lapinski/f91f111fc59a8b77762b67056d6f6055#file-users-component-ts" target="_blank" rel="noopener">users.component.ts</a> 。</p>
+</blockquote>
+<p><strong>解析器让我们在路由期间预取组件数据</strong>。此技术可用于通过预取任何数据来避免向用户显示部分加载的模板。请记住，组件的模板在用户期间是可见的<code>OnInit</code>，因此获取需要在该生命周期钩子中呈现的任何数据可能导致部分页面加载。</p>
+<p><strong>但是，通常最好让页面部分加载</strong>。如果做得好，它将增加用户对网站的感知表现。是否预取数据的决定取决于你，但通常最好是部分页面加载一个很好的加载动画而不是使用解析器。</p>
+<p>在内部，路由器具有<code>runResolve</code>方法，该方法将执行解析程序，并将其结果存储在<code>ActivatedRoute</code>快照上。<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">future.data = &#123;...future.data,</span><br><span class="line">               ...inheritedParamsDataResolve(future, paramsInheritanceStrategy).resolve&#125;;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>代码摘自<a href="https://gist.github.com/nathan-lapinski/36e46b4dc269fa72a775e8484832b8ce#file-pre_activation-ts" target="_blank" rel="noopener">pre_activation.ts</a> 。“future”与<code>ActivatedRouteSnapshot</code>一样.</p>
+</blockquote>
+<p>一旦路由器处理完所有解析器，下一步就是使用适当的路由器插座开始渲染组件。</p>
+<h2 id="激活路由"><a href="#激活路由" class="headerlink" title="激活路由"></a>激活路由</h2><p><em>事件：ActivationStart，ActivationEnd，ChildActivationStart，ChildActivationEnd</em><br><img src="./angular路由的导航周期/angular-router-cycle-views.png" alt=""><br>现在是时候激活组件，并使用<code>a</code>显示它们<code>&lt;router-outlet&gt;</code>。路由器可以从导航周期的前一步骤中构建的<code>ActivatedRouteSnapshots</code>树中提取有关组件的信息。</p>
+<p><img src="./angular路由的导航周期/router_ActivatedRoutstate_debug_info.png" alt="component属性告诉路由器创建并激活UsersComponent的实例。我们还可以看到我们在data.users属性下获取的用户"></p>
+<blockquote>
+<p>component属性告诉路由器创建并激活UsersComponent的实例。我们还可以看到我们在data.users属性下获取的用户</p>
+</blockquote>
+<p>如果您不熟悉在Angular中创建动态组件的过程，那么<a href="https://blog.angularindepth.com/here-is-what-you-need-to-know-about-dynamic-components-in-angular-ac1e96167f9e" target="_blank" rel="noopener">这里</a>和<a href="https://netbasal.com/dynamically-creating-components-with-angular-a7346f4a982d" target="_blank" rel="noopener">这里</a>都有很好的解释。<br>所有的魔力都发生在路由器的activateWith功能中：<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver|<span class="literal">null</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.isActivated) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Cannot activate an already activated outlet'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">this</span>._activatedRoute = activatedRoute;</span><br><span class="line">  <span class="keyword">const</span> snapshot = activatedRoute._futureSnapshot;</span><br><span class="line">  <span class="keyword">const</span> component = &lt;<span class="built_in">any</span>&gt;snapshot.routeConfig !.component;</span><br><span class="line">  resolver = resolver || <span class="keyword">this</span>.resolver;</span><br><span class="line">  <span class="keyword">const</span> factory = resolver.resolveComponentFactory(component);</span><br><span class="line">  <span class="keyword">const</span> childContexts = <span class="keyword">this</span>.parentContexts.getOrCreateContext(<span class="keyword">this</span>.name).children;</span><br><span class="line">  <span class="keyword">const</span> injector = <span class="keyword">new</span> OutletInjector(activatedRoute, childContexts, <span class="keyword">this</span>.location.injector);</span><br><span class="line">  <span class="keyword">this</span>.activated = <span class="keyword">this</span>.location.createComponent(factory, <span class="keyword">this</span>.location.length, injector);</span><br><span class="line">  <span class="comment">// Calling `markForCheck` to make sure we will run the change detection when the</span></span><br><span class="line">  <span class="comment">// `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.</span></span><br><span class="line">  <span class="keyword">this</span>.changeDetector.markForCheck();</span><br><span class="line">  <span class="keyword">this</span>.activateEvents.emit(<span class="keyword">this</span>.activated.instance);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>代码摘自<a href="https://gist.github.com/nathan-lapinski/6ac2b51ba59baf68bd3587fbd500df41#file-router_outlet-ts" target="_blank" rel="noopener">router_outlet.ts</a> 。</p>
+</blockquote>
+<p>不要强调细节，我将在这里总结代码的要点：</p>
+<ul>
+<li>在第9行，<code>ComponentFactoryResolver</code>用于创建一个实例<code>UsersComponent</code>。路由器从第7行的<code>ActivatedRouteSnapshot</code>中提取此信息。</li>
+<li>在第12行，实际创建了组件。<code>location</code>是针对该<code>&lt;router-outlet&gt;</code>目标的<code>ViewContainerRef</code>。如果您曾经想知道为什么渲染内容被放置为<code>&lt;router-outlet&gt;</code>与其内部相对的兄弟，可以通过<a href="https://github.com/angular/angular/blob/master/packages/core/src/view/refs.ts#L199" target="_blank" rel="noopener">遵循内部细节找到详细信息createComponent</a>。</li>
+<li>在创建并激活组件之后，<code>activateChildRoutes</code>调用（未示出）。这样做是为了解释任何嵌套的<code>&lt;router-outlet&gt;</code>，称为子路由。<br>路由器将在屏幕上呈现组件。如果呈现的组件具有任何嵌套<code>&lt;router-outlet&gt;</code>元素，则路由器将遍历并呈现这些元素。</li>
+</ul>
+<h2 id="更新URL"><a href="#更新URL" class="headerlink" title="更新URL"></a>更新URL</h2><p><img src="./angular路由的导航周期/angular-router-cycle-update-url.png" alt=""><br>导航周期的最后一步是将URL更新为<code>/users</code>。<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> updateTargetUrlAndHref(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.href = <span class="keyword">this</span>.locationStrategy.prepareExternalUrl(<span class="keyword">this</span>.router.serializeUrl(<span class="keyword">this</span>.urlTree));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>代码摘自<a href="https://gist.github.com/nathan-lapinski/8d8fb69970d1decf43ab87dee4fd0917#file-router_link-ts" target="_blank" rel="noopener">router_link.ts</a> 。</p>
+</blockquote>
+<p>路由器现在已准备好侦听另一个URL更改，并重新开始循环。</p>
+<p>。。。</p>
+<p>在本系列的最后一部分中，我们将深入研究路由器的延迟加载模块机制。感谢阅读，敬请期待！</p>
+<p>感谢 <a href="https://medium.com/@timdeschryver?source=post_page" target="_blank" rel="noopener">Tim Deschryver</a>和<a href="https://medium.com/@alex.okrushko" target="_blank" rel="noopener">Alex Okrushko</a>。</p>
+<p>原文：<a href="https://blog.angularindepth.com/angular-router-series-pillar-2-navigation-d050286bf4fa" target="_blank" rel="noopener">Angular Router Series: Pillar 2 — Understanding The Router’s Navigation Cycle</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/angular/" rel="tag"># angular</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/14/201712/kafka-manager安装/" rel="next" title="kafka-manager安装">
+                <i class="fa fa-chevron-left"></i> kafka-manager安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/01/21/201901/angular路由的导航周期/" data-title="angular路由的导航周期" data-url="https://alexspring123.github.io/2019/01/21/201901/angular路由的导航周期/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="无名">
+          <p class="site-author-name" itemprop="name">无名</p>
+          <p class="site-description motion-element" itemprop="description">think big, do small</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/alexspring123" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://alexspring123.github.io/2017/09/06/资料收集" title="资料收集" target="_blank">资料收集</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://my.oschina.net/mumu/home" title="大漠穷秋" target="_blank">大漠穷秋</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#导航"><span class="nav-number">1.</span> <span class="nav-text">导航</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例应用"><span class="nav-number">2.</span> <span class="nav-text">示例应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导航周期和路由器事件"><span class="nav-number">3.</span> <span class="nav-text">导航周期和路由器事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网址匹配和重定向"><span class="nav-number">4.</span> <span class="nav-text">网址匹配和重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路线卫兵"><span class="nav-number">5.</span> <span class="nav-text">路线卫兵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路线解析器"><span class="nav-number">6.</span> <span class="nav-text">路线解析器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活路由"><span class="nav-number">7.</span> <span class="nav-text">激活路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新URL"><span class="nav-number">8.</span> <span class="nav-text">更新URL</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">无名</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chengxinwen"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

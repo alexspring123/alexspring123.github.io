@@ -1,0 +1,756 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Spring,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="前言在使用spring的过程中，一般很少直接使用BeanFactory示例作为容器，更多的是使用ApplicationContext示例作为容器。ApplicationContext容器提供观察者模式的时间机制  ApplicationEvent：事件 ApplicationListener：时间监听 ApplicationContext：容器应用程序只需要创建一个event并发布到容器中，Lis">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring容器事件">
+<meta property="og:url" content="https://alexspring123.github.io/2017/07/21/201707/spring容器事件/index.html">
+<meta property="og:site_name" content="无名之家">
+<meta property="og:description" content="前言在使用spring的过程中，一般很少直接使用BeanFactory示例作为容器，更多的是使用ApplicationContext示例作为容器。ApplicationContext容器提供观察者模式的时间机制  ApplicationEvent：事件 ApplicationListener：时间监听 ApplicationContext：容器应用程序只需要创建一个event并发布到容器中，Lis">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-21T09:38:26.973Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring容器事件">
+<meta name="twitter:description" content="前言在使用spring的过程中，一般很少直接使用BeanFactory示例作为容器，更多的是使用ApplicationContext示例作为容器。ApplicationContext容器提供观察者模式的时间机制  ApplicationEvent：事件 ApplicationListener：时间监听 ApplicationContext：容器应用程序只需要创建一个event并发布到容器中，Lis">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6363407138743649000',
+      author: '无名'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://alexspring123.github.io/2017/07/21/201707/spring容器事件/">
+
+
+
+
+
+  <title> spring容器事件 | 无名之家 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">无名之家</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">知行合一 <br>修生、齐家、治国、平天下</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://alexspring123.github.io/2017/07/21/201707/spring容器事件/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="无名">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="无名之家">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="无名之家" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                spring容器事件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-21T14:07:18+08:00">
+                2017-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/07/21/201707/spring容器事件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/21/201707/spring容器事件/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在使用spring的过程中，一般很少直接使用BeanFactory示例作为容器，更多的是使用ApplicationContext示例作为容器。<br>ApplicationContext容器提供观察者模式的时间机制</p>
+<ul>
+<li>ApplicationEvent：事件</li>
+<li>ApplicationListener：时间监听</li>
+<li>ApplicationContext：容器<br>应用程序只需要创建一个event并发布到容器中，Listener就会监听到此事件并进行处理。<br>此篇文章我们就来详细讨论一下Spring事件的各种用法。</li>
+</ul>
+<a id="more"></a>
+<h1 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h1><p>借助spring提供的事件模型，我们可以很方便的定义、发布和监听自定义事件。</p>
+<h2 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h2><p>自定义的事件对象需要实现ApplicationEvent接口（spring4.2版本后可以不实现，将在下面介绍）<br>比如我们定义一个MyEvent事件对象，其中text属性模拟事件属性<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 自定义事件</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyEvent</span> <span class="keyword">extends</span> <span class="title">ApplicationEvent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> String text; <span class="comment">//事件内容</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">MyEvent</span><span class="params">(Object source)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(source);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">MyEvent</span><span class="params">(Object source, String text)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(source);</span><br><span class="line">    <span class="keyword">this</span>.text = text;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getText</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> text;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setText</span><span class="params">(String text)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.text = text;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="发布事件"><a href="#发布事件" class="headerlink" title="发布事件"></a>发布事件</h2><p>我们只要通过ApplicationContext的publishEvent方法就可以发布一个自定义消息。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 容器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    ApplicationContext ctx = <span class="keyword">new</span> AnnotationConfigApplicationContext(Application.class);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//新建事件</span></span><br><span class="line">    MyEvent myEvent = <span class="keyword">new</span> MyEvent(<span class="string">"myEvent"</span>, <span class="string">"我是自定义事件的内容"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//向容器发布时间</span></span><br><span class="line">    ctx.publishEvent(myEvent);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="事件监听"><a href="#事件监听" class="headerlink" title="事件监听"></a>事件监听</h2><p>我们可以通过实现ApplicationListener接口来创建监听<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 自定义事件监听</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyEventListener</span> <span class="keyword">implements</span> <span class="title">ApplicationListener</span>&lt;<span class="title">MyEvent</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onApplicationEvent</span><span class="params">(MyEvent event)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"监听到自定义事件："</span> + event.getText());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当然也可以使用更古老的方式监听，这种写法逻辑不清晰，个人不推荐<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 事件监听</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyEventListener2</span> <span class="keyword">implements</span> <span class="title">ApplicationListener</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onApplicationEvent</span><span class="params">(ApplicationEvent event)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (event <span class="keyword">instanceof</span> MyEvent) &#123;</span><br><span class="line">      MyEvent myEvent = (MyEvent) event;</span><br><span class="line">      System.out.println(<span class="string">"监听到自定义事件："</span> + myEvent.getText());</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h2><p>运行Application的main函数后控制台输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">监听到自定义事件：我是自定义事件的内容</span><br></pre></td></tr></table></figure></p>
+<h1 id="spring内置的事件"><a href="#spring内置的事件" class="headerlink" title="spring内置的事件"></a>spring内置的事件</h1><p>Spring内置的ApplicationEvent有</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">事件</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ContextClosedEvent</td>
+<td style="text-align:left">当ApplicationContext被关闭时触发该事件。容器被关闭时，其管理的所有单例Bean都被销毁。</td>
+</tr>
+<tr>
+<td style="text-align:left">ContextRefreshedEvent</td>
+<td style="text-align:left">当ApplicationContext初始化或者刷新时触发该事件</td>
+</tr>
+<tr>
+<td style="text-align:left">ContextStartedEvent</td>
+<td style="text-align:left">容器启动时发布</td>
+</tr>
+<tr>
+<td style="text-align:left">ContextStoppedEvent</td>
+<td style="text-align:left">当容器调用ConfigurableApplicationContext的Stop()方法停止容器时触发该事件</td>
+</tr>
+<tr>
+<td style="text-align:left">PayloadApplicationEvent</td>
+<td style="text-align:left">在spring4.2中新引入的事件，大部分由spring内部使用；spring4.2之后向容器中发布的事件，不再强制要求继承自ApplicationEvent，当发布一个非ApplicationEvent对象时，spring会自动包装成PayloadApplicationEvent。</td>
+</tr>
+<tr>
+<td style="text-align:left">RequestHandledEvent</td>
+<td style="text-align:left">这是一个 web-specific 事件，告诉所有 bean HTTP 请求已经被服务</td>
+</tr>
+</tbody>
+</table>
+<h2 id="事件监听-1"><a href="#事件监听-1" class="headerlink" title="事件监听"></a>事件监听</h2><h3 id="ContextRefreshedEvent事件监听器"><a href="#ContextRefreshedEvent事件监听器" class="headerlink" title="ContextRefreshedEvent事件监听器"></a>ContextRefreshedEvent事件监听器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 容器初始化及Bean刷新事件监听</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ContextRefreshedEventListener</span> <span class="keyword">implements</span> <span class="title">ApplicationListener</span>&lt;<span class="title">ContextRefreshedEvent</span>&gt; </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onApplicationEvent</span><span class="params">(ContextRefreshedEvent event)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"监听到ContextRefreshedEvent事件"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ContextStartedEvent事件监听器"><a href="#ContextStartedEvent事件监听器" class="headerlink" title="ContextStartedEvent事件监听器"></a>ContextStartedEvent事件监听器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 容器启动事件监听</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ContextStartedEventListener</span> <span class="keyword">implements</span> <span class="title">ApplicationListener</span>&lt;<span class="title">ContextStartedEvent</span>&gt; </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onApplicationEvent</span><span class="params">(ContextStartedEvent event)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"监听到ContextStartedEvent事件"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ContextClosedEvent事件监听器"><a href="#ContextClosedEvent事件监听器" class="headerlink" title="ContextClosedEvent事件监听器"></a>ContextClosedEvent事件监听器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 容器关闭事件监听</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ContextClosedEventListener</span> <span class="keyword">implements</span> <span class="title">ApplicationListener</span>&lt;<span class="title">ContextClosedEvent</span>&gt; </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onApplicationEvent</span><span class="params">(ContextClosedEvent event)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"监听到ContextClosedEvent事件"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ContextStoppedEvent事件监听器"><a href="#ContextStoppedEvent事件监听器" class="headerlink" title="ContextStoppedEvent事件监听器"></a>ContextStoppedEvent事件监听器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 容器停止事件监听</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ContextStoppedEventListener</span> <span class="keyword">implements</span> <span class="title">ApplicationListener</span>&lt;<span class="title">ContextStoppedEvent</span>&gt; </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onApplicationEvent</span><span class="params">(ContextStoppedEvent event)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"监听到ContextStoppedEvent事件"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="发布事件-1"><a href="#发布事件-1" class="headerlink" title="发布事件"></a>发布事件</h2><p>编写容器，其中ApplicationContext更强制设置为AnnotationConfigApplicationContext类型。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 容器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    AnnotationConfigApplicationContext ctx = <span class="keyword">new</span> AnnotationConfigApplicationContext(Application.class);</span><br><span class="line"></span><br><span class="line">    ctx.start();</span><br><span class="line"></span><br><span class="line">    MyEvent myEvent = <span class="keyword">new</span> MyEvent(<span class="string">"myEvent"</span>, <span class="string">"我是自定义事件的内容"</span>);  <span class="comment">//新建事件</span></span><br><span class="line">    ctx.publishEvent(myEvent); <span class="comment">//向容器发布时间</span></span><br><span class="line"></span><br><span class="line">    ctx.stop();</span><br><span class="line">    ctx.close();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="执行结果-1"><a href="#执行结果-1" class="headerlink" title="执行结果"></a>执行结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">监听到ContextRefreshedEvent事件</span><br><span class="line">监听到ContextStartedEvent事件</span><br><span class="line">监听到自定义事件：我是自定义事件的内容</span><br><span class="line">监听到ContextStoppedEvent事件</span><br><span class="line">监听到ContextClosedEvent事件</span><br></pre></td></tr></table></figure>
+<h1 id="PayloadApplicationEvent用法"><a href="#PayloadApplicationEvent用法" class="headerlink" title="PayloadApplicationEvent用法"></a>PayloadApplicationEvent用法</h1><p>Spring4.2版本优化了自定义事件类的写法，不再强制要求实现ApplicationEvent接口，定义一个普通的java类，然后通过容器发布。容器会自动将此对象包装成PayloadApplicationEvent事件，然后通过监听此事件获取原始对象。</p>
+<h2 id="事件对象-1"><a href="#事件对象-1" class="headerlink" title="事件对象"></a>事件对象</h2><p>编写一个普通的java对象作为事件对象<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 未实现ApplicationEvent的事件对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NormalEvent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> String text;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">NormalEvent</span><span class="params">(String text)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.text = text;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getText</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> text;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setText</span><span class="params">(String text)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.text = text;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="事件监听器"><a href="#事件监听器" class="headerlink" title="事件监听器"></a>事件监听器</h2><p>注意，此处监听了PayloadApplicationEvent事件，然后从此事件中获取被包装的原始对象<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * PayloadApplicationEvent事件监听</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NormalEventListener</span> <span class="keyword">implements</span> <span class="title">ApplicationListener</span>&lt;<span class="title">PayloadApplicationEvent</span>&gt; </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onApplicationEvent</span><span class="params">(PayloadApplicationEvent event)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.getPayload() <span class="keyword">instanceof</span> NormalEvent) &#123;</span><br><span class="line">      NormalEvent normalEvent = (NormalEvent) event.getPayload();</span><br><span class="line">      System.out.println(<span class="string">"监听到自定义事件："</span> + normalEvent.getText());</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="EventListener用法"><a href="#EventListener用法" class="headerlink" title="@EventListener用法"></a>@EventListener用法</h1><p>Spring4.2还增加了@EventListener注解。<br>通过此注解监听器不再需要实现ApplicationListener接口，给普通的方法增加@EventListener注解，spring会自动注册一个ApplicationListener来匹配方法签名。</p>
+<h2 id="发布事件-2"><a href="#发布事件-2" class="headerlink" title="发布事件"></a>发布事件</h2><p>可以看到，我们发布的是一个未实现ApplicationEvent的普通java对象<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 容器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    ApplicationContext ctx = <span class="keyword">new</span> AnnotationConfigApplicationContext(Application.class);</span><br><span class="line">   </span><br><span class="line">    ctx.publishEvent(<span class="keyword">new</span> NormalEvent(<span class="string">"我是一个事件，但是并未实现ApplicationEvent接口"</span>)); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="事件监听-2"><a href="#事件监听-2" class="headerlink" title="事件监听"></a>事件监听</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用EventListener注解的监听器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NormalEventListener2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@EventListener</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handelNormalEvent</span><span class="params">(NormalEvent normalEvent)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"监听到自定义事件："</span> + normalEvent.getText());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="执行结果-2"><a href="#执行结果-2" class="headerlink" title="执行结果"></a>执行结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">监听到自定义事件：我是一个事件，但是并未实现ApplicationEvent接口</span><br></pre></td></tr></table></figure>
+<p>从上面可以看出来，从Spring4.2后，事件不再需要实现ApplicationEvent接口，监听器也不再需要实现ApplicationListener接口，通过简单自动包装事件对象和@EventListener注解，大大简化了事件的实现。</p>
+<h2 id="带条件的监听器"><a href="#带条件的监听器" class="headerlink" title="带条件的监听器"></a>带条件的监听器</h2><p>@EventListener注解，可以通过classes属性指定监听的消息类型（可以多个），还可以通过condition属性增加监听条件（SpELg表达式），例如下面<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用EventListener注解的带条件的监听器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NormalEventListener3</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@EventListener</span>(classes = &#123;NormalEvent.class&#125;, condition = <span class="string">"#normalEvent.text==\"test\""</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handelNormalEvent</span><span class="params">(NormalEvent normalEvent)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"监听到自定义事件："</span> + normalEvent.getText());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 容器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    ApplicationContext ctx = <span class="keyword">new</span> AnnotationConfigApplicationContext(Application.class);</span><br><span class="line"></span><br><span class="line">    ctx.publishEvent(<span class="keyword">new</span> NormalEvent(<span class="string">"我是一个事件，但是并未实现ApplicationEvent接口"</span>)); </span><br><span class="line">    ctx.publishEvent(<span class="keyword">new</span> NormalEvent(<span class="string">"test"</span>)); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">监听到自定义事件：test</span><br></pre></td></tr></table></figure></p>
+<p>从结果可以看出，只有第二个发布的事件被监听到了，通过这个功能，我们可以方便的监听符合条件的事件。</p>
+<h2 id="EventListener注解方法返回非null"><a href="#EventListener注解方法返回非null" class="headerlink" title="@EventListener注解方法返回非null"></a>@EventListener注解方法返回非null</h2><p>对于任何一个使用@EventListener注解的方法，允许定一个非void的返回类型。如果返回一个非null值，Spring将此结果作为一个新事件发布到容器。</p>
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 容器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    AnnotationConfigApplicationContext ctx = <span class="keyword">new</span> AnnotationConfigApplicationContext(Application.class);</span><br><span class="line"></span><br><span class="line">    ctx.publishEvent(<span class="keyword">new</span> NormalEvent(<span class="string">"我是一个事件，但是并未实现ApplicationEvent接口"</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="监听器"><a href="#监听器" class="headerlink" title="监听器"></a>监听器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用EventListener注解带返回值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NormalEventListener4</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@EventListener</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> NormalEvent <span class="title">handelNormalEvent</span><span class="params">(NormalEvent normalEvent)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"NormalEventListener4监听到自定义事件："</span> + normalEvent.getText());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (Objects.equals(normalEvent.getText(), <span class="string">"我是NormalEventListener4的自动发布的事件"</span>))</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> NormalEvent(<span class="string">"我是NormalEventListener4的自动发布的事件"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="执行结果-3"><a href="#执行结果-3" class="headerlink" title="执行结果"></a>执行结果</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NormalEventListener4监听到自定义事件：我是一个事件，但是并未实现ApplicationEvent接口</span><br><span class="line">NormalEventListener4监听到自定义事件：我是NormalEventListener4的自动发布的事件</span><br></pre></td></tr></table></figure>
+<h2 id="TransactionalEventListener注解"><a href="#TransactionalEventListener注解" class="headerlink" title="@TransactionalEventListener注解"></a>@TransactionalEventListener注解</h2><p>使用此注解，可以指定只有当外部事务完成后，再执行监听器。</p>
+<h1 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h1><p>由于Spring的事件处理是单线程的，如果一个事件被发布，在所有监听者处理完成前，该进程将被阻塞。<br>因此对于耗时的监听处理逻辑需要小心处理。如果碰到这样耗时的处理，可以考虑使用@Anyc注解来启动单独线程进行处理；对于@Anyc注解的用法，将来单独开文章解释。</p>
+<p>参考文章：<br><a href="https://projects.spring.io/spring-framework/" target="_blank" rel="noopener">https://projects.spring.io/spring-framework/</a><br><a href="http://blog.csdn.net/xiejx618/article/details/44600369" target="_blank" rel="noopener">http://blog.csdn.net/xiejx618/article/details/44600369</a><br><a href="http://blog.csdn.net/chenssy/article/details/8220089" target="_blank" rel="noopener">http://blog.csdn.net/chenssy/article/details/8220089</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/20/201707/JUnit5 User Guide/" rel="next" title="Junit5 User Guide">
+                <i class="fa fa-chevron-left"></i> Junit5 User Guide
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/17/201708/解决vim中文乱码问题/" rel="prev" title="解决vim中文乱码问题">
+                解决vim中文乱码问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/07/21/201707/spring容器事件/" data-title="spring容器事件" data-url="https://alexspring123.github.io/2017/07/21/201707/spring容器事件/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="无名">
+          <p class="site-author-name" itemprop="name">无名</p>
+          <p class="site-description motion-element" itemprop="description">think big, do small</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/alexspring123" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://alexspring123.github.io/2017/09/06/资料收集" title="资料收集" target="_blank">资料收集</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://my.oschina.net/mumu/home" title="大漠穷秋" target="_blank">大漠穷秋</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义事件"><span class="nav-number">2.</span> <span class="nav-text">自定义事件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事件对象"><span class="nav-number">2.1.</span> <span class="nav-text">事件对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布事件"><span class="nav-number">2.2.</span> <span class="nav-text">发布事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件监听"><span class="nav-number">2.3.</span> <span class="nav-text">事件监听</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行结果"><span class="nav-number">2.4.</span> <span class="nav-text">执行结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spring内置的事件"><span class="nav-number">3.</span> <span class="nav-text">spring内置的事件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事件监听-1"><span class="nav-number">3.1.</span> <span class="nav-text">事件监听</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ContextRefreshedEvent事件监听器"><span class="nav-number">3.1.1.</span> <span class="nav-text">ContextRefreshedEvent事件监听器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ContextStartedEvent事件监听器"><span class="nav-number">3.1.2.</span> <span class="nav-text">ContextStartedEvent事件监听器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ContextClosedEvent事件监听器"><span class="nav-number">3.1.3.</span> <span class="nav-text">ContextClosedEvent事件监听器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ContextStoppedEvent事件监听器"><span class="nav-number">3.1.4.</span> <span class="nav-text">ContextStoppedEvent事件监听器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布事件-1"><span class="nav-number">3.2.</span> <span class="nav-text">发布事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行结果-1"><span class="nav-number">3.3.</span> <span class="nav-text">执行结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PayloadApplicationEvent用法"><span class="nav-number">4.</span> <span class="nav-text">PayloadApplicationEvent用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事件对象-1"><span class="nav-number">4.1.</span> <span class="nav-text">事件对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件监听器"><span class="nav-number">4.2.</span> <span class="nav-text">事件监听器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EventListener用法"><span class="nav-number">5.</span> <span class="nav-text">@EventListener用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#发布事件-2"><span class="nav-number">5.1.</span> <span class="nav-text">发布事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件监听-2"><span class="nav-number">5.2.</span> <span class="nav-text">事件监听</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行结果-2"><span class="nav-number">5.3.</span> <span class="nav-text">执行结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带条件的监听器"><span class="nav-number">5.4.</span> <span class="nav-text">带条件的监听器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EventListener注解方法返回非null"><span class="nav-number">5.5.</span> <span class="nav-text">@EventListener注解方法返回非null</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#容器"><span class="nav-number">5.5.1.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监听器"><span class="nav-number">5.5.2.</span> <span class="nav-text">监听器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行结果-3"><span class="nav-number">5.5.3.</span> <span class="nav-text">执行结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TransactionalEventListener注解"><span class="nav-number">5.6.</span> <span class="nav-text">@TransactionalEventListener注解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注意点"><span class="nav-number">6.</span> <span class="nav-text">注意点</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">无名</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chengxinwen"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
