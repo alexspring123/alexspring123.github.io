@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="angular,html,">
+  <meta name="keywords" content="tomcat,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="在使用百度地图时，希望在浏览器窗口大小变化时，地图永远撑满整个界面，此处记录一下实现方法1234567function changeSize() &amp;#123;  var showMap = document.getElementById(&quot;myMap&quot;);  showMap.style.width = document.documentElement.clientWidth + &quot;px&quot;;  sh">
-<meta name="keywords" content="angular,html">
+<meta name="description" content="在linux下运行tomcat会碰到catalina.out日志文件一直增大的问题，本文章给出多种不同的处理办法。">
+<meta name="keywords" content="tomcat">
 <meta property="og:type" content="article">
-<meta property="og:title" content="界面元素自动充满屏幕">
-<meta property="og:url" content="https://alexspring123.github.io/2017/09/05/201709/界面元素自动充满屏幕/index.html">
+<meta property="og:title" content="Linux下tomcat的catalina.out日志文件过大处理方法">
+<meta property="og:url" content="https://alexspring123.github.io/2019/02/23/201902/Linux下tomcat的catalina.out日志文件过大处理方法/index.html">
 <meta property="og:site_name" content="无名之家">
-<meta property="og:description" content="在使用百度地图时，希望在浏览器窗口大小变化时，地图永远撑满整个界面，此处记录一下实现方法1234567function changeSize() &amp;#123;  var showMap = document.getElementById(&quot;myMap&quot;);  showMap.style.width = document.documentElement.clientWidth + &quot;px&quot;;  sh">
+<meta property="og:description" content="在linux下运行tomcat会碰到catalina.out日志文件一直增大的问题，本文章给出多种不同的处理办法。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-21T09:38:26.977Z">
+<meta property="og:updated_time" content="2019-02-23T03:08:31.440Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="界面元素自动充满屏幕">
-<meta name="twitter:description" content="在使用百度地图时，希望在浏览器窗口大小变化时，地图永远撑满整个界面，此处记录一下实现方法1234567function changeSize() &amp;#123;  var showMap = document.getElementById(&quot;myMap&quot;);  showMap.style.width = document.documentElement.clientWidth + &quot;px&quot;;  sh">
+<meta name="twitter:title" content="Linux下tomcat的catalina.out日志文件过大处理方法">
+<meta name="twitter:description" content="在linux下运行tomcat会碰到catalina.out日志文件一直增大的问题，本文章给出多种不同的处理办法。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://alexspring123.github.io/2017/09/05/201709/界面元素自动充满屏幕/">
+  <link rel="canonical" href="https://alexspring123.github.io/2019/02/23/201902/Linux下tomcat的catalina.out日志文件过大处理方法/">
 
 
 
 
 
-  <title>界面元素自动充满屏幕 | 无名之家</title>
+  <title>Linux下tomcat的catalina.out日志文件过大处理方法 | 无名之家</title>
   
 
 
@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://alexspring123.github.io/2017/09/05/201709/界面元素自动充满屏幕/">
+    <link itemprop="mainEntityOfPage" href="https://alexspring123.github.io/2019/02/23/201902/Linux下tomcat的catalina.out日志文件过大处理方法/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="无名">
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">界面元素自动充满屏幕</h1>
+          <h1 class="post-title" itemprop="name headline">Linux下tomcat的catalina.out日志文件过大处理方法</h1>
         
 
         <div class="post-meta">
@@ -262,8 +262,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T16:42:34+08:00">
-                2017-09-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-23T10:46:00+08:00">
+                2019-02-23
               </time>
             
 
@@ -300,9 +300,34 @@
       
 
       
-        <p>在使用百度地图时，希望在浏览器窗口大小变化时，地图永远撑满整个界面，此处记录一下实现方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeSize</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> showMap = <span class="built_in">document</span>.getElementById(<span class="string">"myMap"</span>);</span><br><span class="line">  showMap.style.width = <span class="built_in">document</span>.documentElement.clientWidth + <span class="string">"px"</span>;</span><br><span class="line">  showMap.style.height = <span class="built_in">document</span>.documentElement.clientHeight + <span class="string">"px"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.onresize = changeSize; <span class="comment">//改变大小的时候，div也占满全屏</span></span><br></pre></td></tr></table></figure></p>
-<p>其中myMap是百度地图div的Id值。</p>
-
+        <p>在linux下运行tomcat会碰到catalina.out日志文件一直增大的问题，本文章给出多种不同的处理办法。<br><a id="more"></a></p>
+<h1 id="禁用catalina-out"><a href="#禁用catalina-out" class="headerlink" title="禁用catalina.out"></a>禁用catalina.out</h1><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>修改<code>$CATALINA_BASE/bin/setenv.sh</code>文件（如果不存在则新建一个），文件中加入<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export CATALINA_OUT="/dev/null"</span><br></pre></td></tr></table></figure></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><ul>
+<li>在<code>setenv.sh</code>文件中将<code>CATALINA_OUT</code>重定向到空设备，当然你可以将其定位到其他文件路径</li>
+<li>tomcat启动的会执行<code>$CATALINA_BASE/bin/setenv.sh</code>文件（具体可以查看<code>$CATALINA_BASE/bin/catalina.sh</code>文件）<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>   Do not set the variables in this script. Instead put them into a script</span><br><span class="line"><span class="meta">#</span>   setenv.sh in CATALINA_BASE/bin to keep your customizations separate.</span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="meta">#</span>   CATALINA_HOME   May point at your Catalina "build" directory.</span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="meta">#</span>   CATALINA_BASE   (Optional) Base directory for resolving dynamic portions</span><br><span class="line"><span class="meta">#</span>                   of a Catalina installation.  If not present, resolves to</span><br><span class="line"><span class="meta">#</span>                   the same directory that CATALINA_HOME points to.</span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="meta">#</span>   CATALINA_OUT    (Optional) Full path to a file where stdout and stderr</span><br><span class="line"><span class="meta">#</span>                   will be redirected.</span><br><span class="line"><span class="meta">#</span>                   Default is $CATALINA_BASE/logs/catalina.out</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="切割catalina-out"><a href="#切割catalina-out" class="headerlink" title="切割catalina.out"></a>切割catalina.out</h1><p>Linux一般自带了<code>logrotate</code>命令，查看是否已安装，直接看手册<code>man logrotate</code><br>修改<code>/etc/logrotate.d/tomcat</code>文件（没有则创建一个）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/logrotate.d/tomcat</span><br></pre></td></tr></table></figure></p>
+<p>文件内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$CATALINA_BASE/logs/catalina.out &#123;  </span><br><span class="line">    copytruncate  </span><br><span class="line">    daily  </span><br><span class="line">    rotate 7  </span><br><span class="line">    compress  </span><br><span class="line">    missingok  </span><br><span class="line">    size 5M  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>关于上面的配置：</p>
+<ul>
+<li><code>$CATALINA_BASE/logs/catalina.out</code>：这里的路径即需要切割的日志文件路径，需要替换成实际路径</li>
+<li><code>daily</code>：按天为单位切分 catalina.out 日志文件</li>
+<li><code>rotate 7</code>：最多保存 7 个切分的日志，可以根据自己需求修改</li>
+<li><code>compress</code>：切分后压缩处理 (gzip压缩)</li>
+<li><code>size 5M</code>：如果catalina.out未超过5M则不切分，只有大于5M时才切分</li>
+<li><code>copytruncate</code>：在创建备份之后清空原始文件(大部分程序是不能删除/移动原始文件的，即使之后又重新创建了一个名字一样的也是不行的)。在备份和清空的间隙日志可能会丢失一部分。控制台日志一般没那么严格的要求</li>
+</ul>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><ol>
+<li>每天晚上 cron 定时任务会扫码目录 <code>/etc/cron.daily/</code></li>
+<li><p>触发<code>/etc/cron.daily/logrotate</code>脚本，即运行脚本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/sbin/logrotate /etc/logrotate.conf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>/etc/logrotate.conf</code>会扫码所有<code>/etc/logrotate.d/</code>目录的脚本</p>
+</li>
+<li>触发<code>/etc/logrotate.d/tomcat</code>上面新建的配置</li>
+</ol>
+<h2 id="手工执行"><a href="#手工执行" class="headerlink" title="手工执行"></a>手工执行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/sbin/logrotate /etc/logrotate.conf</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -319,9 +344,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/angular/" rel="tag"># angular</a>
-          
-            <a href="/tags/html/" rel="tag"># html</a>
+            <a href="/tags/tomcat/" rel="tag"># tomcat</a>
           
         </div>
       
@@ -334,8 +357,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/05/201709/浏览器的全屏API/" rel="next" title="浏览器的全屏API">
-                <i class="fa fa-chevron-left"></i> 浏览器的全屏API
+              <a href="/2019/01/21/201901/angular路由的导航周期/" rel="next" title="angular路由的导航周期">
+                <i class="fa fa-chevron-left"></i> angular路由的导航周期
               </a>
             
           </div>
@@ -343,10 +366,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/06/201709/MYSQL开启GTID时导出导入库/" rel="prev" title="MYSQL开启GTID时导出导入库">
-                MYSQL开启GTID时导出导入库 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -398,8 +417,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -468,6 +496,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#禁用catalina-out"><span class="nav-number">1.</span> <span class="nav-text">禁用catalina.out</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">1.1.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.2.</span> <span class="nav-text">原理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#切割catalina-out"><span class="nav-number">2.</span> <span class="nav-text">切割catalina.out</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#工作原理"><span class="nav-number">2.1.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手工执行"><span class="nav-number">2.2.</span> <span class="nav-text">手工执行</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
