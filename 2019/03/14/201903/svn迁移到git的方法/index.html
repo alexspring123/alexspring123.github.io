@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="git,svn,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="svn在使用过程中经常碰到不稳定的情况，而且不能离线比对文件，因此我们需要迁移到git上。本片文章记录切换的详细过程。">
+<meta name="keywords" content="git,svn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="svn迁移到git的方法">
+<meta property="og:url" content="https://alexspring123.github.io/2019/03/14/201903/svn迁移到git的方法/index.html">
+<meta property="og:site_name" content="无名之家">
+<meta property="og:description" content="svn在使用过程中经常碰到不稳定的情况，而且不能离线比对文件，因此我们需要迁移到git上。本片文章记录切换的详细过程。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-16T02:23:18.427Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="svn迁移到git的方法">
+<meta name="twitter:description" content="svn在使用过程中经常碰到不稳定的情况，而且不能离线比对文件，因此我们需要迁移到git上。本片文章记录切换的详细过程。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://alexspring123.github.io/2019/03/14/201903/svn迁移到git的方法/">
+
+
+
+
+
+  <title>svn迁移到git的方法 | 无名之家</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">无名之家</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">知行合一 <br>修生、齐家、治国、平天下</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://alexspring123.github.io/2019/03/14/201903/svn迁移到git的方法/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="无名">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="无名之家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">svn迁移到git的方法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-14T15:50:17+08:00">
+                2019-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>svn在使用过程中经常碰到不稳定的情况，而且不能离线比对文件，因此我们需要迁移到git上。本片文章记录切换的详细过程。<br><a id="more"></a></p>
+<h1 id="创建用户映射表"><a href="#创建用户映射表" class="headerlink" title="创建用户映射表"></a>创建用户映射表</h1><p>手工新建一个users.txt文件（可以叫其他名称），用来记录svn用户名与git用户的对应关系。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">user1 = First Last Name &lt;email@address.com&gt;</span><br><span class="line">user2 = First Last Name &lt;email@address.com&gt;</span><br></pre></td></tr></table></figure></p>
+<p>左边是svn用户名，右边是git的用户。</p>
+<p>这个文件主要用于svn迁移到git时保留提交历史使用。（会将svn中提交用户名转换成git的用户）</p>
+<p>上面的文件如果一个一个手工操作会比较麻烦，可以通过该命令可以获得 SVN 作者的列表(本方法要求主机上安装了grep，sort 和 perl.)：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> svn log ^/ --xml | grep -P "^&lt;author" | sort -u | \</span><br><span class="line">      perl -pe 's/&lt;author&gt;(.*?)&lt;\/author&gt;/$1 = /' &gt; users.txt</span><br></pre></td></tr></table></figure></p>
+<p> 上面生成的users.txt中包含了svn的用户清单，此时只需要手工补充右边的git用户。</p>
+<p> 如果users.txt文件中有用户缺失，后面的 SVN 命令将会停止。不过你可以更新用户映射然后接着再来（类似断点续传）。</p>
+<h1 id="拉取svn仓库"><a href="#拉取svn仓库" class="headerlink" title="拉取svn仓库"></a>拉取svn仓库</h1> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git svn clone --stdlayout --no-metadata -A users.txt svn://hostname/path dest_dir-tmp</span><br></pre></td></tr></table></figure>
+<p> 这个命令将会在<code>dest_dir-tmp</code>新建一个 Git repo，并开始从 SVN 中拉取代码。请注意 “–stdlayout” 参数表示你的项目在 SVN 中是常见的 “trunk/branches/tags” 目录结构，如果不是，那你需要使用 –tags, –branches, –trunk 参数（请通过 git svn help 自行了解）。</p>
+<p>再后面的参数是 SVN 的地址，一些常见协议都是支持的 : svn://, http://, https://. 注意这个 URL 应该指向项目的 base repository，例如 <a href="http://svn.mycompany.com/myrepo/repository" target="_blank" rel="noopener">http://svn.mycompany.com/myrepo/repository</a>. 不要指到了 /trunk, /tag 或 /branches 里。</p>
+<p>如果出现用户名没找到，更新你的 users.txt 文件，然后<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd dest_dir-tmp</span><br><span class="line"><span class="meta">$</span> git svn fetch</span><br></pre></td></tr></table></figure></p>
+<p>如果你的项目非常大，你可能需要重复上面的命令好几次，直到所有的 SVN commit 都被抓下来了。</p>
+<p>完成后，Git 将会 checkout SVN 的 trunk 到一个新的 Git branch，而其他的 SVN branch 将会设为 Git remote，你可以查看所有的 SVN branch：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git branch -r</span><br></pre></td></tr></table></figure></p>
+<p>如果你想在你的 Git repo 中保留其他的 remote branch，你需要手动创建本地 branch。否则，SVN 的 branch 将不会在最后被 clone。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git checkout -b local_branch remote_branch</span><br></pre></td></tr></table></figure></p>
+<p>SVN tags 被当作 branch 导入了，你需要创建本地 branch，打一个 tag，然后删掉那个 branch，这样才会在 Git 中生成 tag。例如 SVN tag “v1”:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git checkout -b tag_v1 remotes/tags/v1</span><br><span class="line"><span class="meta">$</span> git checkout master</span><br><span class="line"><span class="meta">$</span> git tag v1 tag_v1</span><br><span class="line"><span class="meta">$</span> git branch -D tag_v1</span><br></pre></td></tr></table></figure></p>
+<p>把上面的 GIT-SVN repo Clone 到一个全新的干净 git repo:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git clone dest_dir-tmp dest_dir</span><br><span class="line"><span class="meta">$</span> rm -rf dest_dir-tmp</span><br><span class="line"><span class="meta">$</span> cd dest_dir</span><br></pre></td></tr></table></figure></p>
+<p>之前从 remote branch 创建的本地 branch 又会在新 clone 的 repo 中成为 remote branch，于是对每个 branch 再做一次：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git checkout -b local_branch origin/remote_branch</span><br></pre></td></tr></table></figure></p>
+<p>最后，从干净的 Git repo 中删掉 remote （指向我们刚刚已经删掉的 temp repo）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git remote rm origin</span><br></pre></td></tr></table></figure></p>
+<p>这样一个全新 Git repo 就已经从 SVN 迁移好了.</p>
+<p>如果你用的是macOS或linux系统，上面对于clone下来的svn项目处理过程可以简单使用官方的2条命令   </p>
+<ol>
+<li>要把标签变成合适的 Git 标签<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git for-each-ref refs/remotes/tags | cut -d / -f 4- | grep -v @ | while read tagname; do git tag "$tagname" "tags/$tagname"; git branch -r -d "tags/$tagname"; done</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>该命令将原本以 tag/ 开头的远程分支的索引变成真正的（轻巧的）标签</p>
+<ol start="2">
+<li>把 <code>refs/remotes</code> 下面剩下的索引变成本地分支<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git for-each-ref refs/remotes | cut -d / -f 3- | grep -v @ | while read branchname; do git branch "$branchname" "refs/remotes/$branchname"; git branch -r -d "$branchname"; done</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="推送git到远程库"><a href="#推送git到远程库" class="headerlink" title="推送git到远程库"></a>推送git到远程库</h1><p>将本地的 Git repo push 到远程仓库（我这里用的是 GitLab）：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git remote add origin git@git.udev.hk:udba/udba.git</span><br><span class="line"><span class="meta">$</span> git push -u origin master</span><br></pre></td></tr></table></figure></p>
+<p>push 所有的 branch：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git push origin --all</span><br></pre></td></tr></table></figure></p>
+<p>push 所有的 tag：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin --tags</span><br></pre></td></tr></table></figure></p>
+<h1 id="碰到的问题"><a href="#碰到的问题" class="headerlink" title="碰到的问题"></a>碰到的问题</h1><h2 id="git-svn-clone报错"><a href="#git-svn-clone报错" class="headerlink" title="git svn clone报错"></a>git svn clone报错</h2><p>macOS中执行<code>git svn clone --stdlayout --no-metadata -A users.txt http://10.129.209.194/svn/hd123 hd123</code>命令时报错如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Can&apos;t locate SVN/Core.pm in @INC (you may need to install the SVN::Core module) (@INC contains: /usr/local/git/lib/perl5/site_perl/5.18.2/darwin-thread-multi-2level /usr/local/git/lib/perl5/site_perl/5.18.2 /usr/local/git/lib/perl5/site_perl /Library/Perl/5.18/darwin-thread-multi-2level /Library/Perl/5.18 /Network/Library/Perl/5.18/darwin-thread-multi-2level /Network/Library/Perl/5.18 /Library/Perl/Updates/5.18.2 /System/Library/Perl/5.18/darwin-thread-multi-2level /System/Library/Perl/5.18 /System/Library/Perl/Extras/5.18/darwin-thread-multi-2level /System/Library/Perl/Extras/5.18 .) at /usr/local/git/lib/perl5/site_perl/Git/SVN/Utils.pm line 6.</span><br><span class="line">BEGIN failed--compilation aborted at /usr/local/git/lib/perl5/site_perl/Git/SVN/Utils.pm line 6.</span><br><span class="line">Compilation failed in require at /usr/local/git/lib/perl5/site_perl/Git/SVN.pm line 25.</span><br><span class="line">BEGIN failed--compilation aborted at /usr/local/git/lib/perl5/site_perl/Git/SVN.pm line 32.</span><br><span class="line">Compilation failed in require at /usr/local/git/libexec/git-core/git-svn line 21.</span><br><span class="line">BEGIN failed--compilation aborted at /usr/local/git/libexec/git-core/git-svn line 21.</span><br></pre></td></tr></table></figure></p>
+<p>解决办法：重装git 和 SVN<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> brew reinstall git</span><br><span class="line"><span class="meta">$</span> brew reinstall subversion</span><br></pre></td></tr></table></figure></p>
+<h2 id="下载代码过程中报Connection-timed-out"><a href="#下载代码过程中报Connection-timed-out" class="headerlink" title="下载代码过程中报Connection timed out"></a>下载代码过程中报Connection timed out</h2><p>解决办法：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd hd123</span><br><span class="line"><span class="meta">$</span> git svn featch</span><br></pre></td></tr></table></figure></p>
+<p>过程中中断的都可以通过上面命令继续下载，特别是大的仓库经常会需要多次fetch才能下载完成。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://www.lovelucy.info/codebase-from-svn-to-git-migration-keep-commit-history.html" target="_blank" rel="noopener">https://www.lovelucy.info/codebase-from-svn-to-git-migration-keep-commit-history.html</a></li>
+<li><a href="https://git-scm.com/book/zh/v1/Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F-%E8%BF%81%E7%A7%BB%E5%88%B0-Git" target="_blank" rel="noopener">https://git-scm.com/book/zh/v1/Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F-%E8%BF%81%E7%A7%BB%E5%88%B0-Git</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/1098891" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1098891</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+            <a href="/tags/svn/" rel="tag"># svn</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/23/201902/Linux下tomcat的catalina.out日志文件过大处理方法/" rel="next" title="Linux下tomcat的catalina.out日志文件过大处理方法">
+                <i class="fa fa-chevron-left"></i> Linux下tomcat的catalina.out日志文件过大处理方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/16/201903/Ubuntu下添加开机启动脚本/" rel="prev" title="Ubuntu下添加开机启动脚本">
+                Ubuntu下添加开机启动脚本 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">无名</p>
+              <p class="site-description motion-element" itemprop="description">think big, do small</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://alexspring123.github.io/2017/09/06/资料收集" title="资料收集" target="_blank">资料收集</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://my.oschina.net/mumu/home" title="大漠穷秋" target="_blank">大漠穷秋</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#创建用户映射表"><span class="nav-number">1.</span> <span class="nav-text">创建用户映射表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拉取svn仓库"><span class="nav-number">2.</span> <span class="nav-text">拉取svn仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推送git到远程库"><span class="nav-number">3.</span> <span class="nav-text">推送git到远程库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#碰到的问题"><span class="nav-number">4.</span> <span class="nav-text">碰到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-svn-clone报错"><span class="nav-number">4.1.</span> <span class="nav-text">git svn clone报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载代码过程中报Connection-timed-out"><span class="nav-number">4.2.</span> <span class="nav-text">下载代码过程中报Connection timed out</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">无名</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
