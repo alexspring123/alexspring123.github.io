@@ -2,129 +2,84 @@
 
 
 
-  
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-CN">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="angular,百度地图,">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="百度地图提供了InfoWindow的功能，可以很方便的在地图上显示信息框。但是当信息框的内容很复杂时，使用原生方法创建信息框就比较麻烦。此文章介绍用angular4的component来开发InfoWindow功能。你可能会问，为什么不用angular的dialog组件呢？其实是可以的，只是体验会差一下。地图的InfoWindow会跟随覆盖物的位置，当对话框超出窗口时，地图会自动移动使InfoWi">
+  <meta name="description" content="百度地图提供了InfoWindow的功能，可以很方便的在地图上显示信息框。但是当信息框的内容很复杂时，使用原生方法创建信息框就比较麻烦。此文章介绍用angular4的component来开发InfoWindow功能。你可能会问，为什么不用angular的dialog组件呢？其实是可以的，只是体验会差一下。地图的InfoWindow会跟随覆盖物的位置，当对话框超出窗口时，地图会自动移动使InfoWi">
 <meta name="keywords" content="angular,百度地图">
 <meta property="og:type" content="article">
 <meta property="og:title" content="百度地图InfoWindow集成angular的component">
 <meta property="og:url" content="https://alexspring123.github.io/2017/09/14/201709/百度地图InfoWindow集成angular的component/index.html">
 <meta property="og:site_name" content="无名之家">
 <meta property="og:description" content="百度地图提供了InfoWindow的功能，可以很方便的在地图上显示信息框。但是当信息框的内容很复杂时，使用原生方法创建信息框就比较麻烦。此文章介绍用angular4的component来开发InfoWindow功能。你可能会问，为什么不用angular的dialog组件呢？其实是可以的，只是体验会差一下。地图的InfoWindow会跟随覆盖物的位置，当对话框超出窗口时，地图会自动移动使InfoWi">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-01-21T09:38:26.977Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="百度地图InfoWindow集成angular的component">
 <meta name="twitter:description" content="百度地图提供了InfoWindow的功能，可以很方便的在地图上显示信息框。但是当信息框的内容很复杂时，使用原生方法创建信息框就比较麻烦。此文章介绍用angular4的component来开发InfoWindow功能。你可能会问，为什么不用angular的dialog组件呢？其实是可以的，只是体验会差一下。地图的InfoWindow会跟随覆盖物的位置，当对话框超出窗口时，地图会自动移动使InfoWi">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
   <link rel="canonical" href="https://alexspring123.github.io/2017/09/14/201709/百度地图InfoWindow集成angular的component/">
 
 
-
-
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
 
   <title>百度地图InfoWindow集成angular的component | 无名之家</title>
   
@@ -136,37 +91,53 @@
 
 
 
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">无名之家</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-      
         <p class="site-subtitle">知行合一 <br>修生、齐家、治国、平天下</p>
       
   </div>
 
   <div class="site-nav-toggle">
-    <button>
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -174,122 +145,143 @@
   </div>
 </div>
 
+
 <nav class="site-nav">
   
-
-  
-    <ul id="menu" class="menu">
+  <ul id="menu" class="menu">
+      
+      
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
       
+    
 
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
       
-    </ul>
-  
+      
+      
+        
+        <li class="menu-item menu-item-commonweal">
+      
+    
 
-  
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+  </ul>
+
 </nav>
-
-
-
- </div>
+</div>
     </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+            
+
           <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  
-
+      <article itemscope="" itemtype="http://schema.org/Article">
   
   
   
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://alexspring123.github.io/2017/09/14/201709/百度地图InfoWindow集成angular的component/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="无名">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="think big, do small">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="无名之家">
     </span>
-
-    
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">百度地图InfoWindow集成angular的component
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">百度地图InfoWindow集成angular的component</h1>
-        
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
+              <span class="post-meta-item-text">发表于</span>
+
               
-                <span class="post-meta-item-text">发表于</span>
+                
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-14T13:11:57+08:00">
-                2017-09-14
-              </time>
-            
 
-            
-
-            
-          </span>
-
-          
-
+              <time title="创建时间：2017-09-14 13:11:57" itemprop="dateCreated datePublished" datetime="2017-09-14T13:11:57+08:00">2017-09-14</time>
+            </span>
           
             
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-01-21 17:38:26" itemprop="dateModified" datetime="2019-01-21T17:38:26+08:00">2019-01-21</time>
+              </span>
+            
           
 
           
-          
-
-          
-
-          
-
-          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/09/14/201709/百度地图InfoWindow集成angular的component/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2017/09/14/201709/百度地图InfoWindow集成angular的component/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
-    
 
     
     
@@ -297,13 +289,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
         <p>百度地图提供了InfoWindow的功能，可以很方便的在地图上显示信息框。但是当信息框的内容很复杂时，使用原生方法创建信息框就比较麻烦。此文章介绍用angular4的component来开发InfoWindow功能。<br>你可能会问，为什么不用angular的dialog组件呢？<br>其实是可以的，只是体验会差一下。地图的InfoWindow会跟随覆盖物的位置，当对话框超出窗口时，地图会自动移动使InfoWindow显示在当前页面范围内。普通的dialog组件实现跟随效果会比较复杂。</p>
 <a id="more"></a>
-<h1 id="原生的InfoWindow"><a href="#原生的InfoWindow" class="headerlink" title="原生的InfoWindow"></a>原生的InfoWindow</h1><p>百度地图官方<a href="http://lbsyun.baidu.com/jsdemo.htm?a#d0_1" target="_blank" rel="noopener">Demo</a>中有关于原始InfoWindow的用法，如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> opts = &#123;</span><br><span class="line">	  width : <span class="number">200</span>,     <span class="comment">// 信息窗口宽度</span></span><br><span class="line">	  height: <span class="number">100</span>,     <span class="comment">// 信息窗口高度</span></span><br><span class="line">	  title : <span class="string">"海底捞王府井店"</span> , <span class="comment">// 信息窗口标题</span></span><br><span class="line">	  enableMessage:<span class="literal">true</span>,<span class="comment">//设置允许信息窗发送短息</span></span><br><span class="line">	  message:<span class="string">"亲耐滴，晚上一起吃个饭吧？戳下面的链接看下地址喔~"</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> infoWindow = <span class="keyword">new</span> BMap.InfoWindow(<span class="string">"地址：北京市东城区王府井大街88号乐天银泰百货八层"</span>, opts);  <span class="comment">// 创建信息窗口对象 </span></span><br><span class="line">	marker.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;          </span><br><span class="line">		map.openInfoWindow(infoWindow,point); <span class="comment">//开启信息窗口</span></span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>其中InfoWindow的第一个构造函数传入了一个string字符串，第二个是窗口选项，设置了窗口大小以及标题等。<br>其实<a href="http://lbsyun.baidu.com/cms/jsapi/class/jsapi_reference.html#a3b7" target="_blank" rel="noopener">InfoWindow</a>的构造函数第一个参数还可以是一个Element  </p>
+<h1 id="原生的InfoWindow"><a href="#原生的InfoWindow" class="headerlink" title="原生的InfoWindow"></a>原生的InfoWindow</h1><p>百度地图官方<a href="http://lbsyun.baidu.com/jsdemo.htm?a#d0_1">Demo</a>中有关于原始InfoWindow的用法，如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> opts = &#123;</span><br><span class="line">	  width : <span class="number">200</span>,     <span class="comment">// 信息窗口宽度</span></span><br><span class="line">	  height: <span class="number">100</span>,     <span class="comment">// 信息窗口高度</span></span><br><span class="line">	  title : <span class="string">"海底捞王府井店"</span> , <span class="comment">// 信息窗口标题</span></span><br><span class="line">	  enableMessage:<span class="literal">true</span>,<span class="comment">//设置允许信息窗发送短息</span></span><br><span class="line">	  message:<span class="string">"亲耐滴，晚上一起吃个饭吧？戳下面的链接看下地址喔~"</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> infoWindow = <span class="keyword">new</span> BMap.InfoWindow(<span class="string">"地址：北京市东城区王府井大街88号乐天银泰百货八层"</span>, opts);  <span class="comment">// 创建信息窗口对象 </span></span><br><span class="line">	marker.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;          </span><br><span class="line">		map.openInfoWindow(infoWindow,point); <span class="comment">//开启信息窗口</span></span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>其中InfoWindow的第一个构造函数传入了一个string字符串，第二个是窗口选项，设置了窗口大小以及标题等。<br>其实<a href="http://lbsyun.baidu.com/cms/jsapi/class/jsapi_reference.html#a3b7">InfoWindow</a>的构造函数第一个参数还可以是一个Element  </p>
 <blockquote>
 <p>InfoWindow(content: String | HTMLElement, opts: InfoWindowOptions)</p>
 </blockquote>
@@ -312,7 +301,7 @@
 <h2 id="定义组件"><a href="#定义组件" class="headerlink" title="定义组件"></a>定义组件</h2><p>我们创建一个普通的angular组件，用来作为InfoWindow的内容组件。<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-map-dialog'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./map.dialog.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./map.dialog.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> MapDialogComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  lamp: Lamp;  <span class="comment">// 业务数据对象</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"></span>) &#123;  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置业务对象，供父组件使用</span></span><br><span class="line">  setLamp(lamp: Lamp): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.lamp = lamp;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>组件页面代码，具体逻辑没有显示<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  &#123;&#123;lamp.code&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>上面只是演示，实际中div内容会比较复杂。</p>
-<h2 id="动态创建组件"><a href="#动态创建组件" class="headerlink" title="动态创建组件"></a>动态创建组件</h2><p>在上一步我们定义好了组件，现在需要在父组件中动态创建MapDialogComponent组件。<br>angular提供了<a href="https://angular.cn/guide/dynamic-component-loader#动态组件加载器" target="_blank" rel="noopener">动态加载组件的方案</a>。使用ComponentFactoryResolver来动态创建一个componet，使用ViewContainerRef来动态创建一个视图。  </p>
+<h2 id="动态创建组件"><a href="#动态创建组件" class="headerlink" title="动态创建组件"></a>动态创建组件</h2><p>在上一步我们定义好了组件，现在需要在父组件中动态创建MapDialogComponent组件。<br>angular提供了<a href="https://angular.cn/guide/dynamic-component-loader#动态组件加载器">动态加载组件的方案</a>。使用ComponentFactoryResolver来动态创建一个componet，使用ViewContainerRef来动态创建一个视图。  </p>
 <p>在使用之前我们需要在父组件MapComponent的构造函数中注入ComponentFactoryResolver和ViewContainerRef<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> componentFactoryResolver: ComponentFactoryResolver,</span></span><br><span class="line"><span class="params">  <span class="keyword">private</span> viewContainer: ViewContainerRef</span>) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>父组件中添加动态创建MapDialogComponent的方法<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> createDialog(dialogComponent: &#123; <span class="keyword">new</span>(): MapDialogComponent &#125;): ComponentRef&lt;MapDialogComponent&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> dialogComponentFactory =</span><br><span class="line">    <span class="keyword">this</span>.componentFactoryResolver.resolveComponentFactory(dialogComponent);</span><br><span class="line">  <span class="keyword">let</span> dialogComponentRef = <span class="keyword">this</span>.viewContainer.createComponent(dialogComponentFactory);</span><br><span class="line">  <span class="keyword">return</span> dialogComponentRef;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>在创建地图覆盖物时添加click事件。其中的lamp是业务数据<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> createMarker(lamp: Lamp): <span class="built_in">any</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> point = <span class="keyword">this</span>.getPoint(lamp);</span><br><span class="line">  <span class="keyword">let</span> icon = <span class="keyword">this</span>.getIcon(<span class="keyword">this</span>.map.getZoom(), lamp);</span><br><span class="line">  <span class="keyword">let</span> marker = <span class="keyword">new</span> <span class="keyword">this</span>.BMap.Marker(point, &#123; icon: icon &#125;);</span><br><span class="line">  marker.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="params">e</span> =&gt;</span> <span class="keyword">this</span>.openDialog(lamp, e.target));</span><br><span class="line">  <span class="keyword">return</span> marker;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -325,84 +314,67 @@
 </ol>
 <p>如果哪位大牛知道这2个问题，请联系我（QQ：112924481）。</p>
 
-      
     </div>
-    
-    
-    
 
     
-
     
-
     
-
-    <footer class="post-footer">
+        
       
-        <div class="post-tags">
+
+      <footer class="post-footer">
           
-            <a href="/tags/angular/" rel="tag"># angular</a>
-          
-            <a href="/tags/百度地图/" rel="tag"># 百度地图</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/06/资料收集/" rel="next" title="资料收集">
-                <i class="fa fa-chevron-left"></i> 资料收集
-              </a>
+          
+          <div class="post-tags">
+            
+              <a href="/tags/angular/" rel="tag"># angular</a>
+            
+              <a href="/tags/百度地图/" rel="tag"># 百度地图</a>
             
           </div>
+        
 
-          <span class="post-nav-divider"></span>
+        
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/15/201709/百度地图使用viewport时center不能设置为城市名/" rel="prev" title="百度地图使用viewport时center不能设置为城市名">
-                百度地图使用viewport时center不能设置为城市名 <i class="fa fa-chevron-right"></i>
-              </a>
-            
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/09/06/资料收集/" rel="next" title="资料收集">
+                  <i class="fa fa-chevron-left"></i> 资料收集
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/09/15/201709/百度地图使用viewport时center不能设置为城市名/" rel="prev" title="百度地图使用viewport时center不能设置为城市名">
+                  百度地图使用viewport时center不能设置为城市名 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
           </div>
-        </div>
-      
-
-      
-      
-    </footer>
+        
+      </footer>
+    
   </div>
   
   
   
   </article>
 
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
 
           </div>
           
-
-
-          
-
+    
+    <div class="comments" id="comments"></div>
   
 
-
-
         </div>
-        
           
   
   <div class="sidebar-toggle">
@@ -413,146 +385,90 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
-    
+  <aside class="sidebar">
     <div class="sidebar-inner">
-
+        
+        
+        
+        
       
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">无名</p>
-              <p class="site-description motion-element" itemprop="description">think big, do small</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">33</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">28</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          
-
-          
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-block">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                Links
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://alexspring123.github.io/2017/09/06/资料收集" title="资料收集" target="_blank">资料收集</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://my.oschina.net/mumu/home" title="大漠穷秋" target="_blank">大漠穷秋</a>
-                  </li>
-                
-              </ul>
-            </div>
-          
-
-          
-
-        </div>
-      </section>
-
-      
       <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原生的InfoWindow"><span class="nav-number">1.</span> <span class="nav-text">原生的InfoWindow</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用angular的component实现InfoWindow"><span class="nav-number">2.</span> <span class="nav-text">使用angular的component实现InfoWindow</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义组件"><span class="nav-number">2.1.</span> <span class="nav-text">定义组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态创建组件"><span class="nav-number">2.2.</span> <span class="nav-text">动态创建组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不完美的地方"><span class="nav-number">2.3.</span> <span class="nav-text">不完美的地方</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原生的InfoWindow"><span class="nav-number">1.</span> <span class="nav-text">原生的InfoWindow</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用angular的component实现InfoWindow"><span class="nav-number">2.</span> <span class="nav-text">使用angular的component实现InfoWindow</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义组件"><span class="nav-number">2.1.</span> <span class="nav-text">定义组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态创建组件"><span class="nav-number">2.2.</span> <span class="nav-text">动态创建组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不完美的地方"><span class="nav-number">2.3.</span> <span class="nav-text">不完美的地方</span></a></li></ol></li></ol></div>
+        
+      </div>
       <!--/noindex-->
-      
 
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">无名</p>
+  <div class="site-description" itemprop="description">think big, do small</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
       
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+      </div>
 
     </div>
   </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">无名</span>
-
-  
 </div>
-
-
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
   <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
-
-
-
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.0</div>
 
         
+
+
+
+
+
 
 
 
@@ -563,156 +479,72 @@
         
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
   </div>
 
   
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'nGkAgBlDog7ooQfADBdy5npe',
+    appKey: '5su89ulnhRm4upo2T2vbQv2m',
+    placeholder: '请在此输入您的留言',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
 </script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>
