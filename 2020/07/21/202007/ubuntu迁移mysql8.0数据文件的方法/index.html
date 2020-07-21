@@ -55,19 +55,19 @@
   };
 </script>
 
-  <meta name="description" content="Kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理任何规模网站中的所有动作流数据。Kafka的目的是通过Hadoop的并行加载机制来统一线上和离线的消息处理，也是为了通过集群机来提供实时的消费。下面介绍有关Kafka的简单安装和使用,想全面了解Kafka,请访问Kafka的官方网站。">
-<meta name="keywords" content="kafka">
+  <meta name="description" content="之前mysql通过apt安装的，运行一段时间之后，发现根分区过小，有必要将占用空间大的数据库迁移到home分区，于是，有了这篇文章。">
+<meta name="keywords" content="mysql,linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MacOS安装kafka">
-<meta property="og:url" content="https://alexspring123.github.io/2017/11/10/201711/MacOS安装kafka/index.html">
+<meta property="og:title" content="ubuntu迁移mysql8.0数据文件的方法">
+<meta property="og:url" content="https://alexspring123.github.io/2020/07/21/202007/ubuntu迁移mysql8.0数据文件的方法/index.html">
 <meta property="og:site_name" content="无名之家">
-<meta property="og:description" content="Kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理任何规模网站中的所有动作流数据。Kafka的目的是通过Hadoop的并行加载机制来统一线上和离线的消息处理，也是为了通过集群机来提供实时的消费。下面介绍有关Kafka的简单安装和使用,想全面了解Kafka,请访问Kafka的官方网站。">
+<meta property="og:description" content="之前mysql通过apt安装的，运行一段时间之后，发现根分区过小，有必要将占用空间大的数据库迁移到home分区，于是，有了这篇文章。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-21T09:38:26.978Z">
+<meta property="og:updated_time" content="2020-07-21T12:04:16.420Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MacOS安装kafka">
-<meta name="twitter:description" content="Kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理任何规模网站中的所有动作流数据。Kafka的目的是通过Hadoop的并行加载机制来统一线上和离线的消息处理，也是为了通过集群机来提供实时的消费。下面介绍有关Kafka的简单安装和使用,想全面了解Kafka,请访问Kafka的官方网站。">
-  <link rel="canonical" href="https://alexspring123.github.io/2017/11/10/201711/MacOS安装kafka/">
+<meta name="twitter:title" content="ubuntu迁移mysql8.0数据文件的方法">
+<meta name="twitter:description" content="之前mysql通过apt安装的，运行一段时间之后，发现根分区过小，有必要将占用空间大的数据库迁移到home分区，于是，有了这篇文章。">
+  <link rel="canonical" href="https://alexspring123.github.io/2020/07/21/202007/ubuntu迁移mysql8.0数据文件的方法/">
 
 
 <script id="page-configurations">
@@ -81,7 +81,7 @@
   };
 </script>
 
-  <title>MacOS安装kafka | 无名之家</title>
+  <title>ubuntu迁移mysql8.0数据文件的方法 | 无名之家</title>
   
 
 
@@ -220,7 +220,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://alexspring123.github.io/2017/11/10/201711/MacOS安装kafka/">
+    <link itemprop="mainEntityOfPage" href="https://alexspring123.github.io/2020/07/21/202007/ubuntu迁移mysql8.0数据文件的方法/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="无名">
@@ -232,7 +232,7 @@
       <meta itemprop="name" content="无名之家">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">MacOS安装kafka
+        <h1 class="post-title" itemprop="name headline">ubuntu迁移mysql8.0数据文件的方法
 
           
         </h1>
@@ -248,19 +248,11 @@
                 
               
 
-              <time title="创建时间：2017-11-10 14:58:00" itemprop="dateCreated datePublished" datetime="2017-11-10T14:58:00+08:00">2017-11-10</time>
+              <time title="创建时间：2020-07-21 19:53:00 / 修改时间：20:04:16" itemprop="dateCreated datePublished" datetime="2020-07-21T19:53:00+08:00">2020-07-21</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-01-21 17:38:26" itemprop="dateModified" datetime="2019-01-21T17:38:26+08:00">2019-01-21</time>
-              </span>
             
           
 
@@ -275,7 +267,7 @@
       
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2017/11/10/201711/MacOS安装kafka/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2017/11/10/201711/MacOS安装kafka/" itemprop="commentCount"></span></a>
+    <a title="valine" href="/2020/07/21/202007/ubuntu迁移mysql8.0数据文件的方法/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2020/07/21/202007/ubuntu迁移mysql8.0数据文件的方法/" itemprop="commentCount"></span></a>
   </span>
   
   
@@ -289,67 +281,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Kafka是一种高吞吐量的分布式发布订阅消息系统，它可以处理任何规模网站中的所有动作流数据。Kafka的目的是通过Hadoop的并行加载机制来统一线上和离线的消息处理，也是为了通过集群机来提供实时的消费。下面介绍有关Kafka的简单安装和使用,想全面了解Kafka,请访问Kafka的官方网站。</p>
-<a id="more"></a>
-<h1 id="安装并启动zookeeper"><a href="#安装并启动zookeeper" class="headerlink" title="安装并启动zookeeper"></a>安装并启动zookeeper</h1><p>Kafka的运行基于zookeeper，因此我们需要先安装zookeeper。（当然也可以使用Kafka内置的zookeeper，为了学习目的，我们还是独立安装一个zookeeper）</p>
+        <p>之前mysql通过apt安装的，运行一段时间之后，发现根分区过小，有必要将占用空间大的数据库迁移到home分区，于是，有了这篇文章。<br><a id="more"></a></p>
+<h1 id="停掉正在使用的数据库"><a href="#停掉正在使用的数据库" class="headerlink" title="停掉正在使用的数据库"></a>停掉正在使用的数据库</h1><p>为了保证数据的完整性，先暂时停掉正在使用的数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service mysql stop</span><br></pre></td></tr></table></figure></p>
+<h1 id="修改数据目录配置"><a href="#修改数据目录配置" class="headerlink" title="修改数据目录配置"></a>修改数据目录配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/mysql/mysql.conf.d/mysqld.conf</span><br></pre></td></tr></table></figure>
+<p>找到datadir参数（默认情况下是<code>/var/lib/mysql</code>）。<br>将其修改为迁移后的目录，此处我放在了<code>/data/mysql_data</code>目录。</p>
+<p>当然，如果<code>/data/mysql-data</code>目录不存在，则需要新新建<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /data/mysql_data</span><br></pre></td></tr></table></figure></p>
+<h1 id="复制数据文件"><a href="#复制数据文件" class="headerlink" title="复制数据文件"></a>复制数据文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -a -r /var/lib/mysql/* /data/mysql_data</span><br></pre></td></tr></table></figure>
+<p>此处一定要跟上<code>-a</code>参数，不然复制过去的目录没有权限。</p>
+<p>修改新目录的权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R mysql:mysql /data/mysql_data</span><br></pre></td></tr></table></figure></p>
+<h1 id="修改AppArmor"><a href="#修改AppArmor" class="headerlink" title="修改AppArmor"></a>修改AppArmor</h1><p>要通过在默认目录和新位置之间创建别名来告诉AppArmor让MySQL写入新目录。需要编辑AppArmor alias文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/apparmor.d/tunables/alias</span><br></pre></td></tr></table></figure></p>
+<p>在文件底部添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias /var/lib/mysql/ -&gt; /mnt/volume-nyc1-01/mysql/,</span><br></pre></td></tr></table></figure></p>
+<p>保存并退出。</p>
+<p>重启AppArmor服务，使配置生效。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service apparmor restart</span><br></pre></td></tr></table></figure></p>
+<h1 id="启动mysql"><a href="#启动mysql" class="headerlink" title="启动mysql"></a>启动mysql</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service mysql start</span><br></pre></td></tr></table></figure>
+<p>查看mysql状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysql</span><br></pre></td></tr></table></figure></p>
+<h1 id="检查新目录是否生效"><a href="#检查新目录是否生效" class="headerlink" title="检查新目录是否生效"></a>检查新目录是否生效</h1><p>登录mysql<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure></p>
+<p>查看配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show global variables like &quot;%datadir%&quot;;</span><br></pre></td></tr></table></figure></p>
+<p>此时应该看到值为新目录<code>/data/mysql_data</code>，表示配置生效。</p>
+<h1 id="删除原文件"><a href="#删除原文件" class="headerlink" title="删除原文件"></a>删除原文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /var/lib/mysql</span><br></pre></td></tr></table></figure>
+<p>参考文章：</p>
 <ul>
-<li><p>下载</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.4.11/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>解压安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo cp ~/Downloads/zookeeper-3.4.11.tar.gz /usr/local/</span><br><span class="line">cd /usr/local</span><br><span class="line">sudo tar zxvf zookeeper-3.4.11.tar.gz </span><br><span class="line">sudo chown -R alex zookeeper-3.4.11</span><br><span class="line">sudo chgrp -R admin zookeeper-3.4.11</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置dataDir</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/zookeeper-3.4.11</span><br><span class="line">cp -rf conf/zoo_sample.cfg conf/zoo.cfg</span><br><span class="line">cd conf/</span><br><span class="line">vim zoo.cfg</span><br></pre></td></tr></table></figure>
-</li>
+<li><a href="https://zhuanlan.zhihu.com/p/141802334">https://zhuanlan.zhihu.com/p/141802334</a></li>
 </ul>
-<p>修改zook.cfg里头的dataDir</p>
-<blockquote>
-<p>dataDir=/Users/alex/Downloads/zookeeper</p>
-</blockquote>
-<ul>
-<li><p>启动和停止服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/zookeeper-3.4.11/bin/</span><br><span class="line">sh zkServer.sh start # 启动</span><br><span class="line">sh zkServer.sh stop # 停止</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>删除压缩文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /usr/local/zookeeper-3.4.11.tar.gz</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="安装kafka"><a href="#安装kafka" class="headerlink" title="安装kafka"></a>安装kafka</h1><ul>
-<li><p>下载 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://mirror.bit.edu.cn/apache/kafka/1.0.0/kafka_2.11-1.0.0.tgz</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>解压安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo cp ~/Downloads/kafka_2.11-1.0.0.tgz /usr/local/</span><br><span class="line">cd /usr/local/</span><br><span class="line">sudo tar -zxf kafka_2.11-1.0.0.tgz </span><br><span class="line">sudo chown -R alex kafka_2.11-1.0.0</span><br><span class="line">sudo chgrp -R admin kafka_2.11-1.0.0</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动服务<br>启动前必须先启动zookeeper，启动后不要关闭终端窗口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/kafka_2.11-1.0.0/bin/</span><br><span class="line">sh kafka-server-start.sh config/server.properties</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>如果zookeeper不在本地，需要修改servier.properties中的zookeeper配置</p>
-<blockquote>
-<p>zookeeper.connect=localhost:2181<br>改为实际的地址即可</p>
-</blockquote>
-<ul>
-<li><p>创建主题<br>新开一个终端窗口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/kafka_2.11-1.0.0/bin/</span><br><span class="line">sh kafka-topics.sh --create --topic kafkatopic --replication-factor 1 --partitions 1 --zookeeper localhost:2181</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建生产者，并发送消息<br>新开一个终端窗口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/kafka_2.11-1.0.0/bin/</span><br><span class="line">sh kafka-console-producer.sh --broker-list localhost:9092 --sync --topic kafkatopic</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>执行后输入3个消息<br>11<br>22<br>33  </p>
-<ul>
-<li>创建消费者接收消息<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/kafka_2.11-1.0.0/bin/</span><br><span class="line">sh kafka-console-consumer.sh --zookeeper localhost:2181 --topic kafkatopic --from-beginning</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>此时能够正常收到11、22、33的消息说明服务全部正常</p>
-<ul>
-<li>查看所有主题列表<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/kafka_2.11-1.0.0/bin/</span><br><span class="line">sh kafka-topics.sh --list --zookeeper localhost:2181</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>此时可以看到刚才创建的主题kafkatopic</p>
-<p>参考文章：<br><a href="http://nekomiao.me/2016/11/20/kafka/">http://nekomiao.me/2016/11/20/kafka/</a><br><a href="https://segmentfault.com/a/1190000006035868">https://segmentfault.com/a/1190000006035868</a></p>
 
     </div>
 
@@ -365,7 +318,9 @@
           
           <div class="post-tags">
             
-              <a href="/tags/kafka/" rel="tag"># kafka</a>
+              <a href="/tags/mysql/" rel="tag"># mysql</a>
+            
+              <a href="/tags/linux/" rel="tag"># linux</a>
             
           </div>
         
@@ -375,8 +330,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2017/09/26/201709/angular表单提交处理/" rel="next" title="angular表单提交处理">
-                  <i class="fa fa-chevron-left"></i> angular表单提交处理
+                <a href="/2020/07/21/202007/linux下mysql8忘记密码后重置密码/" rel="next" title="linux下mysql8忘记密码后重置密码">
+                  <i class="fa fa-chevron-left"></i> linux下mysql8忘记密码后重置密码
                 </a>
               
             </div>
@@ -384,10 +339,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2017/11/14/201711/保留提交历史的git库迁移方法/" rel="prev" title="保留提交历史的git库迁移方法">
-                  保留提交历史的git库迁移方法 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -439,7 +390,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装并启动zookeeper"><span class="nav-number">1.</span> <span class="nav-text">安装并启动zookeeper</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装kafka"><span class="nav-number">2.</span> <span class="nav-text">安装kafka</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#停掉正在使用的数据库"><span class="nav-number">1.</span> <span class="nav-text">停掉正在使用的数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改数据目录配置"><span class="nav-number">2.</span> <span class="nav-text">修改数据目录配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复制数据文件"><span class="nav-number">3.</span> <span class="nav-text">复制数据文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改AppArmor"><span class="nav-number">4.</span> <span class="nav-text">修改AppArmor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动mysql"><span class="nav-number">5.</span> <span class="nav-text">启动mysql</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#检查新目录是否生效"><span class="nav-number">6.</span> <span class="nav-text">检查新目录是否生效</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除原文件"><span class="nav-number">7.</span> <span class="nav-text">删除原文件</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
